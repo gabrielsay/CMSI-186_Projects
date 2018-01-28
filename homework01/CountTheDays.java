@@ -8,7 +8,7 @@ public class CountTheDays {
     long day2 = Long.parseLong( args [4] );
     long year2 = Long.parseLong( args [5] );
 
-    int days = CalendarStuff.daysBetween( month1, day1, year1, month2, day2, year2 );
-    System.out.println("There are" + days + "between the dates.");
+    long days = CalendarStuff.daysBetween( month1, day1, year1, month2, day2, year2 );
+    System.out.println("There are " + days + " between the dates.");
   }
 }
