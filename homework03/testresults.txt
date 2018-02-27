@@ -1,0 +1,118 @@
+5
+Sum of roll a: 5
+Maybe a different index??
+
+1
+4
+25
+24
+2
+28
+19
+12
+12
+28
+29
+Sum of roll c: 184
+Individual number from roll c: 23
+
+9
+8
+Sum of roll d: 17
+Maybe a different index??
+
+62
+21
+41
+Sum of roll b: 124
+
+TESTING THE DIE CLASS: TEST CONSTRUCTOR FOR INVALID NUMBERS OF SIDES:
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+   Too few sides requested to constructor....
+TESTING THE DIE CLASS: TESTS ON 4-SIDED DIE:
+   roll() test for 4 sided die:
+   You rolled a 4
+   You rolled a 3
+   You rolled a 1
+   You rolled a 4
+   You rolled a 2
+   Current value is: 2
+TESTING THE DIE CLASS: TESTS ON 5-SIDED DIE:
+   roll() test for 5 sided die:
+   You rolled a 2
+   You rolled a 3
+   You rolled a 4
+   You rolled a 2
+   You rolled a 4
+   Current value is: 4
+TESTING THE DIE CLASS: TESTS ON 6-SIDED DIE:
+   roll() test for 6 sided die:
+   You rolled a 6
+   You rolled a 6
+   You rolled a 1
+   You rolled a 5
+   You rolled a 5
+   Current value is: 5
+TESTING THE DIE CLASS: TESTS ON 7-SIDED DIE:
+   roll() test for 7 sided die:
+   You rolled a 2
+   You rolled a 2
+   You rolled a 6
+   You rolled a 7
+   You rolled a 4
+   Current value is: 4
+TESTING THE DIE CLASS: TESTS ON 8-SIDED DIE:
+   roll() test for 8 sided die:
+   You rolled a 8
+   You rolled a 8
+   You rolled a 5
+   You rolled a 5
+   You rolled a 4
+   Current value is: 4
+TESTING THE DIE CLASS: TESTS ON 11-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count --
+      You rolled a 4
+      You rolled a 1
+      You rolled a 4
+      You rolled a 3
+      You rolled a 6
+TESTING THE DIE CLASS: TESTS ON 17-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count --
+      You rolled a 14
+      current value is: 14
+TESTING THE DIE CLASS: TESTS ON 111-SIDED DIE USING NEW SIDE COUNT:
+   Rolling with new side count --
+      You rolled a 68
+      current value is: 68
+......End of Die Class Testing.....
+
+
+TESTING THE DICESET CLASS: TEST CONSTRUCTOR FOR 3 SIX-SIDED DICE:
+  DiceSet: 3 dice, six sided - ds36:
+      initialized ds36 contents             : 000
+6
+5
+5
+      after collective roll ds36 contents   : 655
+      after individual roll(2) ds36 contents: 651
+      sum of dice values is: 12
+   Re-rolling all dice
+1
+6
+5
+      after collective roll ds36 contents   : 165
+      after individual roll(2) ds36 contents: 165
+      sum of dice values is                 : 12
+   Test of getIndividual():
+      value of die at index 0: 6
+      value of die at index 1: 5
+
+TEST HARNESS BLOWS UP WITH THE FOLLOWING ERROR:
+   Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 3
+        at DiceSet.getIndividual(DiceSet.java:105)
+        at DieAndDiceSetTestHarness.main(DieAndDiceSetTestHarness.java:150)
+
+
+
