@@ -3,6 +3,7 @@
  *  Purpose       :  The main program for the ClockSolver class
  *  @see
  *  @author       :  B.J. Johnson
+ *  Student       :  Gabriel Say
  *  Date written  :  2017-02-28
  *  Description   :  This class provides a bunch of methods which may be useful for the ClockSolver class
  *                   for Homework 4, part 1.  Includes the following:
@@ -16,15 +17,21 @@
  *            Rev      Date     Modified by:  Reason for change/modification
  *           -----  ----------  ------------  -----------------------------------------------------------
  *  @version 1.0.0  2017-02-28  B.J. Johnson  Initial writing and release
+ *  @version 1.0.1  2018-03-01  Gabriel Say   Added initial args and other
+ *  @version 1.0.2  2018-03-12  Gabriel Say   Added main
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 public class ClockSolver {
   /**
-   *  Class field definintions go here
+   *  Class field definitions go here
    */
    private final double MAX_TIME_SLICE_IN_SECONDS  = 1800.00;
    private final double DEFAULT_TIME_SLICE_SECONDS = 60.0;
    private final double EPSILON_VALUE              = 0.1;      // small value for double-precision comparisons
+   private double angle;
+   private double timeSlice;
+   private double testAngle = 0;
+   private double angleWindow = 0;
 
   /**
    *  Constructor
@@ -52,7 +59,15 @@ public class ClockSolver {
          System.exit( 1 );
       }
       Clock clock = new Clock();
-   }
+      try {
+        testAngle = clock.validateAngleArg( args[0]);
+        if (2 <= args.length){
+          System.out.print(timeSlice = Double.valueOf( args[1]));
+        }
+      }
+      catch (Exception e) { throw new NumberFormatException(); }
+      System.exit(1);
+      }
 
   /**
    *  The main program starts here
@@ -67,9 +82,8 @@ public class ClockSolver {
       Clock clock    = new Clock();
       double[] timeValues = new double[3];
       cse.handleInitialArguments( args );
-      while( true ) {
-         break;
-      }
+      double normalClock = 0.0;
+      while (normalClock = 43200 )
       System.exit( 0 );
    }
 }
