@@ -83,7 +83,12 @@ public class ClockSolver {
       double[] timeValues = new double[3];
       cse.handleInitialArguments( args );
       double normalClock = 0.0;
-      while (normalClock = 43200 )
+      System.out.print("Angle " + cse + " degrees will appear at this time.");
+      while (normalClock <= 43200) {
+        if (clock.tick() < normalClock){
+          System.out.println("In a 12 hour span, " + clock.getHandAngle() + clock.toString());
+        }
+      }
       System.exit( 0 );
    }
 }
