@@ -253,7 +253,6 @@ public class Clock {
            System.out.println("Current time = " + clock.toString() );
            System.out.print("The minute hand has an angle of " + clock.getMinuteHandAngle() + " degrees.\n");
 
-        }
-     }
+   }
+}
 
-     }
