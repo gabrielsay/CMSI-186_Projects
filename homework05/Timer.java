@@ -1,4 +1,4 @@
-**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *  File Name   :  Timer.java
 *  Purpose     :  Provides a class for defining time related methods in SoccerSim
 *                 class
@@ -11,39 +11,28 @@ import java.text.DecimalFormat;
 
 
 public class Timer {
-  private double hours;
-  private double minutes;
-  private double seconds;
-  private double timeSlice;
+  private static double hours;
+  private static double minutes;
+  private static double seconds;
+  private static double timeSlice;
+  private static double totalSeconds;
 
-  public Timer() {
+  public Timer(double timeSliceInput) {
     hours     = 0.0;
     minutes   = 0.0;
     seconds   = 0.0;
-    timeSlice = 0.0;
+    totalSeconds = 0.0;
+    timeSlice = timeSliceInput;
   }
 
-  public Timer(double param1, double param2, double param3, double param4) {
-    if (param1 < 0 || param2 < 0 || param3 < 0 || param4 < 0 || param4 >1800) {
-      throw new IllegalArgumentException();
-    } hours = param1;
-    minutes = param2;
-    seconds = param3;
-    timeSlice = param4;
-  }
+  public double tick(){
+    totalSeconds += timeSlice;
 
+    hours = Math.floor(totalSeconds/3600);
+    minutes = Math.floor(totalSeconds - (3600* hours));
+    seconds = totalSeconds - (3600 * hours) - (60 * minutes);
 
-  public void tick(){
-    seconds += timeSlice;
-
-    while (seconds >= 60.0) {
-      minutes += 1;
-      seconds -= 60.0;
-    }
-    while (minutes >= 60.0){
-      hours += 1;
-      minutes -= 60.0;
-    }
+    return totalSeconds;
   }
 
   public String toString() {
@@ -52,4 +41,17 @@ public class Timer {
     return formatHourAndMinute.format(hours) + ":" + formatHourAndMinute.format(minutes) + ":" + formatSecond.format(seconds);
   }
 
+  public static void main(String[] args){
+      Timer a = new Timer( 1800 );
+      System.out.println( a.toString() );
+
+      System.out.println( "TESTING tick()...." );
+
+      System.out.println( " Time Slice is equal to 1800 seconds");
+      for ( int i = 0; i < 10; i++ ) {
+        try { System.out.println( "    Time: " + a.toString() ); }
+        catch (Exception e) { System.out.println( e ); }
+        a.tick();
+      }
+  }
 }
