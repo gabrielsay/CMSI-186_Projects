@@ -8,51 +8,60 @@
 import java.text.DecimalFormat;
 
 public class Ball {
-  public static final double Radius = 4.45;
-  public static final double Diameter = 8.65;
-  public static final double Weight = 1; /* why do we need weight? */
-  private double xPos = 0.0;
-  private double yPos = 0.0;
-  private double xVel = 0.0;
-  private double yVel = 0.0;
+  private static final double Radius = 4.45;
+  private static final double Diameter = 8.65;
+  private static final double Weight = 1; /* why do we need weight? */
+  private double[] ballPosition;
+  private double[] ballVelocity;
+  private double ballMovement = 0.0;
   private boolean atRest;
+  private boolean atMovement;
+  private double wheresBall;
 
-  public Ball (double param1, double param2, double param3, double param4){
-    xPos = param1;
-    yPos = param2;
-    xVel = param3;
-    yVel = param4;
+  public Ball(double param1, double param2, double param3, double param4) {
+    ballPosition[0] = param1;
+    ballPosition[1] = param2;
+    ballVelocity[2] = param3;
+    ballVelocity[3] = param4;
 
-    atRest = Math.sqrt((xVel*xVel+yVel*yVel) < 0.083);
+    ballMovement = Math.sqrt((ballVelocity[2]*ballVelocity[2]) + (ballVelocity[3] * ballVelocity[3]));
+    wheresBall = Double.parseDouble(ballPosition[2] + ", " + ballPosition[3]);
   }
 
+  public double[] currentPosition(){
+    return ballPosition;
+  }
+
+  public double[] positionUpdate(double timeSlice){
+    ballPosition[0] = ballPosition[0] + (ballVelocity[2] * timeSlice);
+    ballPosition[1] = ballPosition[1] + (ballVelocity[3] * timeSlice);
+    return ballPosition;
+  }
+
+  public double[] currentVelocity() {
+    return ballVelocity;
+  }
+
+  public double[] velocityUpdate() {
+    ballVelocity[2] = ballVelocity[2] - (ballVelocity[2] / 0.01);
+    ballVelocity[3] = ballVelocity[3] - (ballVelocity[3] / 0.01);
+    return ballVelocity;
+  }
+
+  public boolean atRest() {
+    return atRest = (ballMovement < 0.083) ? true : false;
+  }
+
+  public boolean atMovement() {
+    return atMovement = (ballMovement < 0.082) ? true : false;
+  }
+
+  public String toString() {
+    DecimalFormat ballSpeed = new DecimalFormat("#0.00");
+    DecimalFormat ballLocation = new DecimalFormat("#0.00");
+    return "The ball is moving at " + ballSpeed.format(ballMovement) + " feet." + "The ball is at " + ballLocation.format(wheresBall) + " .";
+  }
+  public static void main (String[] args) {
+
+  }
 }
-
-/**
-* Two indices per array
-
-Ball[] balls = null;
-* IF we see that each ball has its four attributes do the following:
-
-balls = new Ball[3];
-int j = 0;
-for (....i+=4) {
-  balls[j] = new Ball(
-  Double.parseDouble(args[i+0]),
-  "     "      "[i+1],
-  "     "      "[i+2],
-  "     "      "[i+3])
-  );
-}
-
-xpos = Double.p.....args[i+0]
-ypos = "  "  "[i+1]
-xvel =        [i+2]
-yvel =
-balls[j] = new Ball(xpos, ypos, xvel, yvel);
-
-* at bottom of loop, afteer making new ball, add j++ so that it continues until
-       there are no args input
-
-* instead of doing all Double.parseDouble can do all in one line by using comma in constructor
-*/
