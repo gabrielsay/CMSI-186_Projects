@@ -3,7 +3,9 @@
  *  Purpose     :  Provides ball class for how the ball moves in SoccerSim class
  *  @author     :  Gabriel Say
  *  Date Written:  03/15/2018
- *  Description :  This application is a method for
+ *  Description :  This application is a method for the ball to be generated in
+ *                 SoccerSim.
+ *  Notes       :  I was unable to get the updated Velocity to appear as a string.
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 import java.text.DecimalFormat;
 
@@ -63,18 +65,22 @@ public class Ball {
     System.out.println( a.toString() );
     System.out.println( "The ball is at rest: " + a.atRest() + ".");
     System.out.println( "The ball is now at: " + a.positionUpdate(32) + ".");
+    System.out.println( "The ball is now traveling at: " + a.velocityUpdate() + " ft/s.");
 
     System.out.println( "  Creating a new ball: " );
     Ball b = new Ball(31,5,9,14);
     System.out.println( b.toString() );
     System.out.println( "The ball is at rest: " + b.atRest() + ".");
     System.out.println( "The ball is now at: " + b.positionUpdate(9) + ".");
+    System.out.println( "The ball is now traveling at: " + b.velocityUpdate() + " ft/s.");
 
     System.out.println( "  Creating a new ball: " );
     Ball c = new Ball(1,2,0,22);
     System.out.println( c.toString() );
+    System.out.println( "Test for toString: " + c.toString() + ".");
     System.out.println( "The ball is at rest: " + c.atRest() + ".");
     System.out.println( "The ball is now at: " + c.positionUpdate(54) + ".");
+    System.out.println( "The ball is now traveling at: " + c.velocityUpdate() + " ft/s.");
 
   }
 }
