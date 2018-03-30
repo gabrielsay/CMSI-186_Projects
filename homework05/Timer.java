@@ -18,40 +18,62 @@ public class Timer {
   private static double totalSeconds;
 
   public Timer(double timeSliceInput) {
-    hours     = 0.0;
-    minutes   = 0.0;
-    seconds   = 0.0;
-    totalSeconds = 0.0;
     timeSlice = timeSliceInput;
+    totalSeconds = 0.0;
   }
 
   public double tick(){
     totalSeconds += timeSlice;
 
     hours = Math.floor(totalSeconds/3600);
-    minutes = Math.floor(totalSeconds - (3600* hours));
-    seconds = totalSeconds - (3600 * hours) - (60 * minutes);
+    minutes = Math.floor((totalSeconds - (3600* hours))%60);
+    seconds = Math.abs(((3600 * hours) - (60 * minutes) - totalSeconds)%60);
 
     return totalSeconds;
   }
 
   public String toString() {
-    DecimalFormat formatHourAndMinute = new DecimalFormat("#0.00");
-    DecimalFormat formatSecond = new DecimalFormat("#0.000");
+    String hAndMString = "00";
+    String secondsString = "00.0";
+    DecimalFormat formatHourAndMinute = new DecimalFormat(hAndMString);
+    DecimalFormat formatSecond = new DecimalFormat(secondsString);
     return formatHourAndMinute.format(hours) + ":" + formatHourAndMinute.format(minutes) + ":" + formatSecond.format(seconds);
   }
 
-  public static void main(String[] args){
-      Timer a = new Timer( 1800 );
-      System.out.println( a.toString() );
+  public static void main(String args[]){
 
       System.out.println( "TESTING tick()...." );
 
-      System.out.println( " Time Slice is equal to 1800 seconds");
+      System.out.println( " Time Slice is equal to 1800 seconds" );
+      Timer a = new Timer( 1800 );
       for ( int i = 0; i < 10; i++ ) {
         try { System.out.println( "    Time: " + a.toString() ); }
         catch (Exception e) { System.out.println( e ); }
         a.tick();
+      }
+
+      System.out.println( " Time Slice is equal to 356 seconds");
+      Timer b = new Timer( 356 );
+      for ( int i = 0; i < 10; i++ ) {
+        try { System.out.println( "    Time: " + a.toString() ); }
+        catch (Exception e) { System.out.println( e ); }
+        b.tick();
+      }
+
+      System.out.println( " Time Slice is equal to 782 seconds");
+      Timer c = new Timer( 782 );
+      for ( int i = 0; i < 10; i++ ) {
+        try { System.out.println( "    Time: " + c.toString() ); }
+        catch (Exception e) { System.out.println( e ); }
+        c.tick();
+      }
+
+      System.out.println( " Time Slice is equal to 1800 seconds");
+      Timer d = new Timer( 2321 );
+      for ( int i = 0; i < 10; i++ ) {
+        try { System.out.println( "    Time: " + d.toString() ); }
+        catch (Exception e) { System.out.println( e ); }
+        d.tick();
       }
   }
 }
