@@ -55,7 +55,7 @@ public class BrobInt {
    */
    public BrobInt( String value ) {
      super();
-     String brobValue = value;
+     String arrayValue = value;
      long brob = value.length();
      int space = 0;
 
@@ -88,7 +88,33 @@ public class BrobInt {
      }
    }
 
-   public BrobInt compareTo( BrobInt value ) {
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to compare a BrobInt passed as argument to this BrobInt
+     *  @param  gint  BrobInt to add to this
+     *  @return int   that is one of neg/0/pos if this BrobInt precedes/equals/follows the argument
+     *  NOTE: this method does not do a lexicographical comparison using the java String "compareTo()" method
+     *        It takes into account the length of the two numbers, and if that isn't enough it does a
+     *        character by character comparison to determine
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+     public int compareTo( BrobInt gint ) {
+        if( arrayValue.length() > gint.arrayValue.length() ) {
+           return 1;
+        } else if( arrayValue.length() < gint.arrayValue.length() ) {
+           return (-1);
+        } else {
+           for( int i = 0; i < arrayValue.length(); i++ ) {
+              Character a = new Character( arrayValue.charAt(i) );
+              Character b = new Character( gint.arrayValue.charAt(i) );
+              if( new Character(a).compareTo( new Character(b) ) > 0 ) {
+                 return 1;
+              } else if( new Character(a).compareTo( new Character(b) ) < 0 ) {
+                 return (-1);
+              }
+           }
+        }
+     }
+
+     /**
      if (this.toString().substring(0,1).equals("-") && !value.toString(0,1).equals("-") ) {
        return -1;
      } else if (this.toString().length() > value.toString().length() ) {
@@ -96,7 +122,7 @@ public class BrobInt {
            return = 1;
          } return = -1;
              }
-   }
+   }**/
 
    public BrobInt add(BrobInt value) {
      int stackedAdd =
@@ -109,13 +135,54 @@ public class BrobInt {
 
    }
 
-   public BrobInt valueOf( BrobInt value) {
+   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    *  Method to return a BrobInt given a long value passed as argument
+    *  @param  value         long type number to make into a BrobInt
+    *  @return BrobInt  which is the BrobInt representation of the long
+    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    public static BrobInt valueOf( long value ) throws NumberFormatException {
+       BrobInt gi = null;
+       try {
+          gi = new BrobInt( String.valueOf( value ).toString() );
+       }
+       catch( NumberFormatException nfe ) {
+          System.out.println( "\n  Sorry, the value must be numeric of type long." );
+       }
+       return gi;
+    }
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to return the array representation of this BrobInt
+     *  @return array  that holds integer array representation of this BrobInt
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    public int[] getArrayRep() {
+      return intArray;
+    }
 
-   }
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to return BrobInt with absolute value of this BrobInt
+     *  @return BrobInt  that is absolute value of this BrobInt
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    public BrobInt abs() {
+        return ( this.toString().substring( 0 , 1).equals( "-" ) ) ? new BrobInt( this.toString().substring( 1 ) ) : this;
+    }
 
-   public BrobInt toString( BrobInt value ) {
-     return brobValue;
-   }
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to check if a BrobInt passed as argument is equal to this BrobInt
+     *  @param  value     BrobInt to compare to this
+     *  @return boolean  that is true if they are equal and false otherwise
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    public boolean equals( BrobInt value ) {
+      return ( this.toString().equals( value.toString() ) ) ? true : false;
+    }
+
+    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Method to return a String representation of this BrobInt
+     *  @return String  which is the String representation of this BrobInt
+     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+    public String toString() {
+      return arrayValue;
+    }
+
    public static void main( String[] args ) {
       System.out.println( "\n  Hello, world, from the BrobInt program!!\n" );
       System.out.println( "\n   You should run your tests from the BrobIntTester...\n" );
@@ -123,3 +190,18 @@ public class BrobInt {
       System.exit( 0 );
    }
 }
+/* BrobInt for abbreviation
+* cant use java.math.BigInteger only for testing
+* check java API for string comparison
+* no recursive algorithm in fibonacci sequence
+* can handle quicker if pairing them up when bits
+* convert blocks of digits into int/long
+* Add own test harness to repo
+* Need to take into account for add on characters as well as negatives
+* String Builder in api
+* Arrays in API
+* Divide c result by 10 if c result is greater than 9 and add that to carry
+* If deprication error occurs, use (look up class integer) valueOf(int s)
+* can use : depricated to make class file
+* return new BrobInt(this.toString());
+* Flag flag code conventions */
