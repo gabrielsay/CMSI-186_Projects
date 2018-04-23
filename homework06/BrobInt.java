@@ -57,9 +57,9 @@ public class BrobInt {
    //private ArrayList<Integer> valueList = new ArrayList<>();
    public String arrayValue = null;
    private String IntBrob;
-   //private boolean validD = false;
-   public int[] incArray;
-   public String incString = "";
+   public BrobInt absoluteValue;
+   public boolean positiveSum;
+   public boolean thisFirst;
 
    /**
     *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -68,14 +68,10 @@ public class BrobInt {
     *  @param  value  String value to make into a BrobInt
     */
 
-    public BrobInt() {
-      this.IntBrob = "0";
-    }
-
     public BrobInt( String value ) {
       super();
       arrayValue = value.trim();
-      //validateDigits(value);
+      this.IntBrob = "0";
 
       //array to hold string values
       long brobValue = (long)value.length();
@@ -145,6 +141,18 @@ public class BrobInt {
       } return k;
      }
 
+    public BrobInt changeSign() {
+       BrobInt oppSign;
+       String newStr = this.toString();
+         if (newStr.substring(0, 1).equals("+")) { // if this is positive
+           newStr = "-" + newStr.substring(1);
+         } else if (newStr.substring(0, 1).equals("-")) { // if this is negative
+           newStr = "+" + newStr.substring(1);
+         }
+           oppSign = new BrobInt(newStr);
+         return oppSign;
+    }
+
     public static String arrayString(int[] d) {
       String s = "";
       for (int i = 0; i < d.length; i++) {
@@ -153,34 +161,136 @@ public class BrobInt {
       return s;
     }
 
+    public BrobInt absVal() {
+    String absolute = this.toString();
+    if (absolute.substring(0, 1).equals("+") || absolute.substring(0, 1).equals("-")) {
+        absolute = absolute.substring(1);
+      }
+      return new BrobInt(absolute);
+    }
+
+    public boolean moreThan(BrobInt n) {
+    if (this.positiveNumber && !n.positiveNumber) {
+        return true;
+    }
+    if (!this.positiveNumber && n.positiveNumber) {
+        return false;
+    }
+
+    boolean bothPositive = this.positiveNumber && n.positiveNumber;
+    boolean larger = false;
+
+    if (this.IntBrob.length() != n.IntBrob.length()) {
+        larger = this.IntBrob.length() > n.IntBrob.length();
+    } else {
+        for (int i = 0; i < this.IntBrob.length(); i++) {
+            if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) > Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
+                larger = true;
+                break;
+            }
+            if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) < Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
+                larger = false;
+                break;
+            }
+        }
+    }
+    return bothPositive == larger;
+}
+
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     *  Method to add the value of a BrobIntk passed as argument to this BrobInt using int array
     *  @param  gint         BrobInt to add to this
     *  @return BrobInt that is the sum of the value of this BrobInt and the one passed in
     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public BrobInt add( BrobInt gint ) {
+      BrobInt inc;
       boolean largerInt = noSign(gint.IntBrob).length() > noSign(this.IntBrob).length();
       int longestInt = largerInt ? noSign(gint.IntBrob).length() : noSign(this.IntBrob).length();
+      int[] incArray;
+      String incString = "";
 
       this.IntBrob = noSign(this.IntBrob);
       gint.IntBrob = noSign(gint.IntBrob);
-      //checking for both positive
-      if (this.positiveNumber == gint.positiveNumber) {
-        //make both numbers equally as long in array
-        for (int i = 1; i <= longestInt + 1; i++) {
-          if (this.IntBrob.length() < longestInt + 1) {
-            this.IntBrob += "0";
-          } if (gint.IntBrob.length() < longestInt + 1){
-            gint.IntBrob += "0";
+          //checking for both positive
+          if (this.positiveNumber == gint.positiveNumber) {
+            //make both numbers equally as long in array
+            for (int i = 1; i <= longestInt + 1; i++) {
+              if (this.IntBrob.length() < longestInt + 1) {
+              this.IntBrob = "0" + this.IntBrob;
+            } if (gint.IntBrob.length() < longestInt + 1){
+              gint.IntBrob = "0" + gint.IntBrob;
+            }
+          } //array for the sum
+          incArray = new int[longestInt + 1];
+          for (int i = 0; i < incArray.length ; i++) {
+            incArray[i] = Integer.parseInt(this.IntBrob.substring(i, i + 1)) + Integer.parseInt(gint.IntBrob.substring(i, i + 1));
           }
-        } //array for the sum
-        incArray = new int[longestInt + 1];
-        for (int i = 0; i < incArray.length ; i++) {
-          incArray[i] = Integer.parseInt(this.IntBrob.substring(i, i + 1)) + Integer.parseInt(gint.IntBrob.substring(i, i + 1));
+            // carry numbers
+            for (int i = incArray.length - 1; i >= 0; i--) {
+                if (incArray[i] > 9) {
+                    incArray[i] = incArray[i] - 10;
+                    incArray[i - 1] = incArray[i - 1] + 1;
+                }
+            }
+            incString = arrayString(incArray);
+            if (!this.positiveNumber) { // if both numbers are negative
+                incString = "-" + incString;
+            }
+            inc = new BrobInt(incString);
+        } else { // if both have opposite signs
+            incArray = new int[longestInt];
+            if (!this.positiveNumber) { //if this is negative
+                absoluteValue = this.absVal();
+                if (absoluteValue.moreThan(gint)) {
+                    positiveSum = false;
+                    thisFirst = true;
+                } else {
+                    positiveSum = true;
+                    thisFirst = false;
+                }
+                this.IntBrob = noSign(this.IntBrob);
+            } else { // if gint is negative
+                absoluteValue = gint.absVal();
+                if (absoluteValue.moreThan(this)) {
+                    positiveSum = false;
+                    thisFirst = false;
+                } else {
+                    positiveSum = true;
+                    thisFirst = true;
+                }
+                gint.IntBrob = noSign(gint.IntBrob);
+            }
+            // add leading zeros
+        /*    for (int i = 1; i <= longestInt; i++) {
+                if (this.IntBrob.length() < longestInt) {
+                    this.IntBrob = "0" + this.IntBrob;
+                }
+                if (gint.IntBrob.length() < longestInt) {
+                    gint.IntBrob = "0" + gint.IntBrob;
+                }
+            }*/
+            // fill in incArray
+            for (int i = 0; i < incArray.length; i++) {
+                if (thisFirst) {
+                    incArray[i] = Integer.parseInt(this.IntBrob.substring(i, i + 1)) - Integer.parseInt(gint.IntBrob.substring(i, i + 1));
+                } else {
+                    incArray[i] = Integer.parseInt(gint.IntBrob.substring(i, i + 1)) - Integer.parseInt(this.IntBrob.substring(i, i + 1));
+                }
+            }
+            // deal with carryovers
+            for (int i = incArray.length - 1; i >= 0; i--) {
+                if (incArray[i] < 0) {
+                    incArray[i] = incArray[i] + 10;
+                    incArray[i - 1] = incArray[i - 1] - 1;
+                }
+            }
+            incString = arrayString(incArray);
+            if (!positiveSum) {
+                incString = "-" + incString;
+            }
+            inc = new BrobInt(incString);
         }
-
-      }
-       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+        return inc;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +299,7 @@ public class BrobInt {
     *  @return BrobInt that is the difference of the value of this BrobInt and the one passed in
     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public BrobInt subtract( BrobInt gint ) {
-       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
+        return new BrobInt(this.add(gint.changeSign()).toString());
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -320,4 +430,3 @@ public class BrobInt {
 * can use : depricated to make class file
 * return new BrobInt(this.toString());
 * Flag flag code conventions */
-
