@@ -94,7 +94,6 @@ public class Fibonacci {
             for (int i = 2; i < testFib.length; i++) {
                 testFib[i] = testFib[i - 1].add(testFib[i - 2]);
             }
-        }
-        System.out.println(testFib[testFib.length - 1].toString());
+        } System.out.println(testFib[testFib.length - 1].toString());
    }
 }
