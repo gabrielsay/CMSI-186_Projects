@@ -2,6 +2,7 @@
  * File name  :  Fibonacci.java
  * Purpose    :  Find the "nth" Fibonacci number given an argument, using BrobInt class
  * @author    :  B.J. Johnson
+ * @author    :  Gabriel Say
  * Date       :  2017-04-17
  * Description:  @see <a href='http://bjohnson.lmu.build/cmsi186web/homework06.html'>Assignment Page</a>
  * Notes      :  None
@@ -84,9 +85,16 @@ public class Fibonacci {
          System.out.println( "\n                This may take me a while; please be patient!!\n\n" );
       }
 
-      System.out.println( "\n\n\n  ...HA!! Like I'm going to do the ENTIRE thing for you.....  *grins*" );
-
-
-      System.exit( 0 );
+        BrobInt[] testFib = new BrobInt[maxCount];
+        testFib[0] = new BrobInt("0");
+      
+        if (maxCount > 1) {
+            testFib[1] = new BrobInt("1");
+        }  if (maxCount > 2) {
+            for (int i = 2; i < testFib.length; i++) {
+                testFib[i] = testFib[i - 1].add(testFib[i - 2]);
+            }
+        }
+        System.out.println(testFib[testFib.length - 1].toString());
    }
 }
