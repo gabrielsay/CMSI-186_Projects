@@ -21,7 +21,6 @@
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import java.util.Arrays;
-import java.util.ArrayList;
 /** How I found ArrayList and a basic idea for the addition algorithm
 https://www.quora.com/How-can-we-add-two-large-numbers-without-using-any-integer-data-type-in-java
 **/
@@ -72,11 +71,6 @@ public class BrobInt {
       super();
       arrayValue = value.trim();
       this.IntBrob = "0";
-
-      //array to hold string values
-      long brobValue = (long)value.length();
-      brobArr = new int [(int)brobValue];
-
       //check for sign
       if (arrayValue.substring(0,1).equals ("-")) {
         sign = 1;
@@ -102,37 +96,6 @@ public class BrobInt {
        throw new UnsupportedOperationException( "\n         Sorry, not a valid input." );
       }
     } return true;
-    }
-
-   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    *  Method to reverse the value of this BrobInt
-    *  @return BrobInt that is the reverse of the value of this BrobInt
-    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-    public BrobInt reverser(String value) {
-      int brobSearch = 0;
-      for ( int strSearch = value.length(); strSearch > value.length() % 8; strSearch -= 8 ) {
-        if ( strSearch == brobArr.length - 1 && arrayValue.substring(0 , 1).equals( "-" ) ) {
-          for ( int i = 0; i < brobArr.length; i++ ) {
-            brobArr[ i ] *= -1;
-          }
-
-        } else {
-          brobArr[ brobSearch ] = Integer.parseInt( value.substring( strSearch - 8 , strSearch ) );
-          brobSearch++;
-       }
-      }
-
-       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
-    }
-
-   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    *  Method to reverse the value of a BrobIntk passed as argument
-    *  Note: static method
-    *  @param  gint         BrobInt to reverse its value
-    *  @return BrobInt that is the reverse of the value of the BrobInt passed as argument
-    *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-    public static BrobInt reverser( BrobInt gint ) {
-       throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
     }
 
     public String noSign (String k) {
@@ -261,14 +224,14 @@ public class BrobInt {
                 gint.IntBrob = noSign(gint.IntBrob);
             }
             // add leading zeros
-        /*    for (int i = 1; i <= longestInt; i++) {
+           for (int i = 1; i <= longestInt; i++) {
                 if (this.IntBrob.length() < longestInt) {
                     this.IntBrob = "0" + this.IntBrob;
                 }
                 if (gint.IntBrob.length() < longestInt) {
                     gint.IntBrob = "0" + gint.IntBrob;
                 }
-            }*/
+            }
             // fill in incArray
             for (int i = 0; i < incArray.length; i++) {
                 if (thisFirst) {
