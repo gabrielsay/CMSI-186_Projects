@@ -48,7 +48,7 @@ public class BrobInt {
    public static final BrobInt MIN_LONG = new BrobInt( new Long( Long.MIN_VALUE ).toString() );
 
   /// These are the internal fields
-   private String internalValue = "";        // internal String representation of this BrobInt
+   //private String internalValue = "";        // internal String representation of this BrobInt
    private byte   sign          = 0;         // "0" is positive, "1" is negative
    private String reversed      = "";        // the backwards version of the internal String representation
    //private byte[] brobArr   = null;      // byte array for storing the string values; uses the reversed string
@@ -57,7 +57,9 @@ public class BrobInt {
    //private ArrayList<Integer> valueList = new ArrayList<>();
    public String arrayValue = null;
    private String IntBrob;
-   private boolean validD = false;
+   //private boolean validD = false;
+   public int[] incArray;
+   public String incString = "";
 
    /**
     *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -143,6 +145,14 @@ public class BrobInt {
       } return k;
      }
 
+    public static String arrayString(int[] d) {
+      String s = "";
+      for (int i = 0; i < d.length; i++) {
+          s = s + Integer.toString(d[i]);
+      }
+      return s;
+    }
+
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     *  Method to add the value of a BrobIntk passed as argument to this BrobInt using int array
     *  @param  gint         BrobInt to add to this
@@ -151,8 +161,25 @@ public class BrobInt {
     public BrobInt add( BrobInt gint ) {
       boolean largerInt = noSign(gint.IntBrob).length() > noSign(this.IntBrob).length();
       int longestInt = largerInt ? noSign(gint.IntBrob).length() : noSign(this.IntBrob).length();
-      int[] incArray;
-      String incString = "";
+
+      this.IntBrob = noSign(this.IntBrob);
+      gint.IntBrob = noSign(gint.IntBrob);
+      //checking for both positive
+      if (this.positiveNumber == gint.positiveNumber) {
+        //make both numbers equally as long in array
+        for (int i = 1; i <= longestInt + 1; i++) {
+          if (this.IntBrob.length() < longestInt + 1) {
+            this.IntBrob += "0";
+          } if (gint.IntBrob.length() < longestInt + 1){
+            gint.IntBrob += "0";
+          }
+        } //array for the sum
+        incArray = new int[longestInt + 1];
+        for (int i = 0; i < incArray.length ; i++) {
+          incArray[i] = Integer.parseInt(this.IntBrob.substring(i, i + 1)) + Integer.parseInt(gint.IntBrob.substring(i, i + 1));
+        }
+
+      }
        throw new UnsupportedOperationException( "\n         Sorry, that operation is not yet implemented." );
     }
 
@@ -201,14 +228,14 @@ public class BrobInt {
     *        character by character comparison to determine
     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public int compareTo( BrobInt gint ) {
-      if( internalValue.length() > gint.internalValue.length() ) {
+      if( arrayValue.length() > gint.arrayValue.length() ) {
            return 1;
-        } else if( internalValue.length() < gint.internalValue.length() ) {
+        } else if( arrayValue.length() < gint.arrayValue.length() ) {
            return (-1);
         } else {
-           for( int i = 0; i < internalValue.length(); i++ ) {
-              Character a = new Character( internalValue.charAt(i) );
-              Character b = new Character( gint.internalValue.charAt(i) );
+           for( int i = 0; i < arrayValue.length(); i++ ) {
+              Character a = new Character( arrayValue.charAt(i) );
+              Character b = new Character( gint.arrayValue.charAt(i) );
               if( new Character(a).compareTo( new Character(b) ) > 0 ) {
                  return 1;
               } else if( new Character(a).compareTo( new Character(b) ) < 0 ) {
@@ -226,7 +253,7 @@ public class BrobInt {
     *        java String "equals()" method -- THAT was easy..........
     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public boolean equals( BrobInt gint ) {
-       return (internalValue.equals( gint.toString() ));
+       return (arrayValue.equals( gint.toString() ));
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -293,3 +320,4 @@ public class BrobInt {
 * can use : depricated to make class file
 * return new BrobInt(this.toString());
 * Flag flag code conventions */
+
