@@ -72,6 +72,7 @@ public class BrobInt {
       super();
       arrayValue = value.trim();
       this.IntBrob = "0";
+
       //check for sign
       if (arrayValue.substring(0,1).equals ("-")) {
         sign = 1;
@@ -91,10 +92,10 @@ public class BrobInt {
     *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     public boolean validateDigits(String value) throws UnsupportedOperationException{
       if (value.charAt(0) != '-' && value.charAt(0) != '0' && value.charAt(0) != '+' && value.charAt(0) != '-' && value.charAt(0) != '1' && value.charAt(0) != '2' && value.charAt(0) != '3' && value.charAt(0) != '3' && value.charAt(0) != '4' && value.charAt(0) != '5' && value.charAt(0) != '6' && value.charAt(0) != '7' && value.charAt(0) != '8' && value.charAt(0) != '9'){
-        throw new UnsupportedOperationException (" \n Sorry, not a valid input");
+        throw new UnsupportedOperationException (" \n Not Valid");
       } for (int i = 0; i < value.length(); i++) {
         if (value.charAt(i) != '0' && value.charAt(i) != '1' && value.charAt(i) != '2' && value.charAt(i) != '3' && value.charAt(i) != '4' && value.charAt(i) != '5' && value.charAt(i) != '6' && value.charAt(i) != '7' && value.charAt(i) != '8' && value.charAt(i) != '9') {
-       throw new UnsupportedOperationException( "\n         Sorry, not a valid input." );
+       throw new UnsupportedOperationException( "\n Not Valid" );
       }
     } return true;
     }
@@ -111,10 +112,7 @@ public class BrobInt {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static String arrayString(int[] d) {
       String s = "";
-      int i = 0;
-      while (i < d.length) {
-        i++; }
-         {
+      for (int i = 0; i < d.length; i++){
           s = s + Integer.toString(d[i]);
       }
       return s;
@@ -166,18 +164,12 @@ public class BrobInt {
     public BrobInt add( BrobInt gint ) {
       BrobInt inc;
       boolean largerInt = noSign(gint.IntBrob).length() > noSign(this.IntBrob).length();
-      int longestInt = 0;
+      int longestInt = largerInt ? noSign(gint.IntBrob).length() : noSign(this.IntBrob).length();
       int[] incArray;
       String incString = "";
+
       this.IntBrob = noSign(this.IntBrob);
       gint.IntBrob = noSign(gint.IntBrob);
-
-      //check for larger int
-      if (largerInt = true) {
-        longestInt = noSign(gint.IntBrob).length();
-      } else if (largerInt = false) {
-        longestInt = noSign(this.IntBrob).length();
-      }
           //checking for both positive
           if (this.positiveNumber == gint.positiveNumber) {
             //make both numbers equally as long in array
@@ -200,8 +192,7 @@ public class BrobInt {
                 }
             }
             incString = arrayString(incArray);
-            if (!this.positiveNumber) {
-              // if both numbers are negative
+            if (!this.positiveNumber) { // if both numbers are negative
                 incString = "-" + incString;
             }
             inc = new BrobInt(incString);
@@ -227,30 +218,38 @@ public class BrobInt {
                     first = true;
                 }
                 gint.IntBrob = noSign(gint.IntBrob);
-            }// subtraction for incArray
+            }
+            // add leading zeros
+           for (int i = 1; i <= longestInt; i++) {
+                if (this.IntBrob.length() < longestInt) {
+                    this.IntBrob = "0" + this.IntBrob;
+                }
+                if (gint.IntBrob.length() < longestInt) {
+                    gint.IntBrob = "0" + gint.IntBrob;
+                }
+            }
+            // fill in incArray
             for (int i = 0; i < incArray.length; i++) {
                 if (first) {
                     incArray[i] = Integer.parseInt(this.IntBrob.substring(i, i + 1)) - Integer.parseInt(gint.IntBrob.substring(i, i + 1));
                 } else {
                     incArray[i] = Integer.parseInt(gint.IntBrob.substring(i, i + 1)) - Integer.parseInt(this.IntBrob.substring(i, i + 1));
                 }
-            }  // carry
+            }
+            // deal with carryovers
             for (int i = incArray.length - 1; i >= 0; i--) {
                 if (incArray[i] < 0) {
                     incArray[i] = incArray[i] + 10;
                     incArray[i - 1] = incArray[i - 1] - 1;
                 }
-            }  incString = arrayString(incArray);
+            }
+            incString = arrayString(incArray);
             if (!positiveSum) {
                 incString = "-" + incString;
-            } for (int i = 0; i < incString.length(); i++) {
-              if (incString.charAt(i) != '0') {
-                incString = incString.substring(i);
-                break;
-              }
             }
             inc = new BrobInt(incString);
-        }  return inc;
+        }
+        return inc;
     }
 
    /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -474,4 +473,3 @@ public class BrobInt {
 * can use : depricated to make class file
 * return new BrobInt(this.toString());
 * Flag flag code conventions */
-
