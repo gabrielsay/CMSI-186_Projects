@@ -59,6 +59,7 @@ public class BrobInt {
    public BrobInt absoluteValue;
    public boolean positiveSum;
    public boolean first;
+   public boolean larger = false;
 
    /**
     *  Constructor takes a string and assigns it to the internal storage, checks for a sign character
@@ -97,13 +98,17 @@ public class BrobInt {
       }
     } return true;
     }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Removes "+" and "-" from value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public String noSign (String k) {
       if (k.substring(0,1).equals("-") || k.substring(0,1).equals("-") ) {
         return k.substring(1);
       } return k;
      }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* turns array into a string
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static String arrayString(int[] d) {
       String s = "";
       for (int i = 0; i < d.length; i++) {
@@ -111,7 +116,9 @@ public class BrobInt {
       }
       return s;
     }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     * takes absolute Value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public BrobInt absVal() {
     String absolute = this.toString();
     if (absolute.substring(0, 1).equals("+") || absolute.substring(0, 1).equals("-")) {
@@ -119,17 +126,16 @@ public class BrobInt {
       }
       return new BrobInt(absolute);
     }
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * checks which value is larger
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public boolean moreThan(BrobInt n) {
     if (this.positiveNumber && !n.positiveNumber) {
         return true;
-    }
-    if (!this.positiveNumber && n.positiveNumber) {
+    }  if (!this.positiveNumber && n.positiveNumber) {
         return false;
     }
-
     boolean bothPositive = this.positiveNumber && n.positiveNumber;
-    boolean larger = false;
 
     if (this.IntBrob.length() != n.IntBrob.length()) {
         larger = this.IntBrob.length() > n.IntBrob.length();
@@ -138,8 +144,7 @@ public class BrobInt {
             if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) > Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
                 larger = true;
                 break;
-            }
-            if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) < Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
+            } if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) < Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
                 larger = false;
                 break;
             }
@@ -286,7 +291,7 @@ public class BrobInt {
             }
             incString = arrayString(incArray);
             if (!this.positiveNumber) {
-              // if both numbers are negative
+              // add negative sign
                 incString = "-" + incString;
             }
             inc = new BrobInt(incString);
@@ -464,3 +469,4 @@ public class BrobInt {
 * can use : depricated to make class file
 * return new BrobInt(this.toString());
 * Flag flag code conventions */
+
