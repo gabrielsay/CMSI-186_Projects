@@ -111,7 +111,10 @@ public class BrobInt {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public static String arrayString(int[] d) {
       String s = "";
-      for (int i = 0; i < d.length; i++) {
+      int i = 0;
+      while (i < d.length) {
+        i++; }
+         {
           s = s + Integer.toString(d[i]);
       }
       return s;
@@ -120,11 +123,11 @@ public class BrobInt {
      * takes absolute Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     public BrobInt absVal() {
-    String absolute = this.toString();
-    if (absolute.substring(0, 1).equals("+") || absolute.substring(0, 1).equals("-")) {
-        absolute = absolute.substring(1);
+    String abs = this.toString();
+    if (abs.substring(0, 1).equals("+") || abs.substring(0, 1).equals("-")) {
+        abs = abs.substring(1);
       }
-      return new BrobInt(absolute);
+      return new BrobInt(abs);
     }
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  * checks which value is larger
@@ -138,9 +141,11 @@ public class BrobInt {
     boolean bothPositive = this.positiveNumber && n.positiveNumber;
 
     if (this.IntBrob.length() != n.IntBrob.length()) {
-        larger = this.IntBrob.length() > n.IntBrob.length();
+      if (this.IntBrob.length() > n.IntBrob.length()){
+        larger = true ;
+      }
     } else {
-        for (int i = 0; i < this.IntBrob.length(); i++) {
+        for (int i = 0; i < this.IntBrob.length(); i++){
             if (Integer.parseInt(this.IntBrob.substring(i, i + 1)) > Integer.parseInt(n.IntBrob.substring(i, i + 1))) {
                 larger = true;
                 break;
