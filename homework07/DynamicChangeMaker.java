@@ -35,7 +35,7 @@
            throw new IllegalArgumentException("Need at least one coin value!");
          }
        }
-       //check for duplicate
+       //check for duplicates
        for (int startingCoin = 0; startingCoin < numCoins.length; startingCoin++){
          for (int nextCoin = startingCoin + 1; nextCoin < numCoins.length; nextCoin++){
            if (numCoins[startingCoin] == numCoins[nextCoin]) {
@@ -54,7 +54,7 @@
      * @param numCoins      similar to validate, it adds the values of the coins we will be using
      * @param totalWanted   user inputs the total we want to calculate using the coin values given
      * Exception ie         checks to validate the tuples passed through
-     * @return              the best way to find the total wanted by the user, using the coins given 
+     * @return              the best way to find the total wanted by the user, using the coins given
      */
      public static Tuple makeChangeWithDynamicProgramming(int[] numCoins, int totalWanted){
 
@@ -75,17 +75,22 @@
                      if (vert >= numCoins[horz]){
                          gridChange[horz][vert] = new Tuple(numCoins.length);
                          gridChange[horz][vert].setElement(horz, 1);
+                        //checks for instance in which the inputs are IMPOSSIBLE
                          if (gridChange[horz][vert - numCoins[horz]].equals(Tuple.IMPOSSIBLE)) {
                              gridChange[horz][vert] = Tuple.IMPOSSIBLE;
+                             //method of addition
                          } else if (!gridChange[horz][vert - numCoins[horz]].equals(Tuple.IMPOSSIBLE)) {
                              gridChange[horz][vert] = gridChange[horz][vert].add(gridChange[horz][vert-numCoins[horz]]);
                          }
+                         //if none are valid, return IMPOSSIBLE
                      } else {
                          gridChange[horz][vert] = Tuple.IMPOSSIBLE;
                      }
                  }
 
                  if (horz != 0) {
+                   //multiple methods to check if the value of either horizontal or vertical are valid
+                   //sets basic value of the grid if possible
                      if (!gridChange[horz][vert].equals(Tuple.IMPOSSIBLE)) {
                          if (gridChange[horz - 1][vert].equals(Tuple.IMPOSSIBLE)) {
                          } else if (!gridChange[horz - 1][vert].equals(Tuple.IMPOSSIBLE)) {
@@ -106,3 +111,5 @@
      }
 
  }
+
+ // must use makeChangeWithDynamicProgramming()
